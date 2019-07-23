@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c47123e7257d14f4b583f7afc86533a7",
+    "content-hash": "e25aa9d5258db8f81f4ebcc0186bb231",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -1298,16 +1298,16 @@
         },
         {
             "name": "mgp25/instagram-php",
-            "version": "dev-master",
+            "version": "v6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "d1159725aae5f4f61d1b3a4053dfc57a6c5f85a7"
+                "reference": "babad4f4f9a49d85b97cbdadbd587a072ab22c2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/d1159725aae5f4f61d1b3a4053dfc57a6c5f85a7",
-                "reference": "d1159725aae5f4f61d1b3a4053dfc57a6c5f85a7",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/babad4f4f9a49d85b97cbdadbd587a072ab22c2f",
+                "reference": "babad4f4f9a49d85b97cbdadbd587a072ab22c2f",
                 "shasum": ""
             },
             "require": {
@@ -1370,29 +1370,7 @@
                 "php",
                 "private"
             ],
-            "time": "2019-07-16T17:10:01+00:00"
-        },
-        {
-            "name": "miladrahimi/php-instagram-live",
-            "version": "v1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/miladrahimi/php-instagram-live.git",
-                "reference": "dbc5d8966a673461616469d76b01fd1fe418d38c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/miladrahimi/php-instagram-live/zipball/dbc5d8966a673461616469d76b01fd1fe418d38c",
-                "reference": "dbc5d8966a673461616469d76b01fd1fe418d38c",
-                "shasum": ""
-            },
-            "require": {
-                "mgp25/instagram-php": "dev-master#e79acc05cd9d690f663a68da2b6a1549d3df29e7",
-                "php": ">7.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2019-07-19T15:17:24+00:00"
+            "time": "2019-06-22T16:30:54+00:00"
         },
         {
             "name": "monolog/monolog",

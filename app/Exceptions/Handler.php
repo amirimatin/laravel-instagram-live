@@ -55,6 +55,12 @@ class Handler extends ExceptionHandler
             ], 400);
         }
 
+        if ($exception instanceof ApiErrorException) {
+            return new JsonResponse([
+                'error' => $exception->getMessage(),
+            ], $exception->getCode());
+        }
+
         return parent::render($request, $exception);
     }
 }

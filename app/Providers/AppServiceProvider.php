@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use InstagramAPI\Instagram;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(Instagram::class, function () {
+            Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+            return new Instagram(false, false);
+        });
     }
 
     /**

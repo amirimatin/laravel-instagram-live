@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'live'], function () {
     Route::post('start', 'LiveController@start');
+    Route::post('stop', 'LiveController@stop');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

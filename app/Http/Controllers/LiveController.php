@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiErrorException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use InstagramAPI\Instagram;
+use Throwable;
 
 /**
  * Class LiveController
@@ -26,34 +28,77 @@ class LiveController extends Controller
             'password' => 'required',
         ]);
 
-        $script = config('live.script');
-        $username = $request->input('username');
-        $password = $request->input('password');
-        $output = [];
-        $returnVar = null;
+        /** @var Instagram $instagram */
+        $instagram = app(Instagram::class);
 
-        exec("php $script 1 $username $password", $output, $returnVar);
-
-        if (Str::startsWith($output[0], 'Error While Logging in to Instagram')) {
-            return new JsonResponse([
-                'error' => 'Authorization failed.'
-            ], 401);
-        } elseif (Str::startsWith($output[0], '*') == false) {
-            return new JsonResponse([
-                'error' => $output[0]
-            ], 500);
+        try {
+            $loginResponse = $instagram->login(
+                $request->input('username'),
+                $request->input('password')
+            );
+        } catch (Throwable $e) {
+            throw new ApiErrorException($e->getMessage(), 401);
         }
 
-        $response = explode('*', $output[0]);
-        $liveId = $response[1];
-        $rtmpUrl = $response[2];
-        $streamKey = $response[3];
-        $httpStatus = 200;
+        if ($loginResponse != null && $loginResponse->isTwoFactorRequired()) {
+            throw new ApiErrorException('Two factor auth is not supported.', 401);
+        }
+
+        $creationResponse = $instagram->live->create();
+        if ($creationResponse->isOk() == false) {
+            throw new ApiErrorException($creationResponse->getMessage(), 400);
+        }
+
+        $startingResponse = $instagram->live->start($creationResponse->getBroadcastId());
+        if ($startingResponse->isOk() == false) {
+            throw new ApiErrorException($startingResponse->getMessage(), 400);
+        }
 
         return new JsonResponse([
-            'live_id' => $liveId,
-            'stream_key' => $streamKey,
-            'rtmp_url' => $rtmpUrl,
-        ], $httpStatus);
+            'broadcast_id' => $creationResponse->getBroadcastId(),
+            'upload_url' => $creationResponse->getUploadUrl(),
+            'info' => $instagram->live->getInfo($creationResponse->getBroadcastId()),
+        ], 200);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function stop(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required',
+            'broadcast_id' => 'required',
+        ]);
+
+        /** @var Instagram $instagram */
+        $instagram = app(Instagram::class);
+
+        try {
+            $loginResponse = $instagram->login(
+                $request->input('username'),
+                $request->input('password')
+            );
+        } catch (Throwable $e) {
+            throw new ApiErrorException($e->getMessage(), 401);
+        }
+
+        if ($loginResponse != null && $loginResponse->isTwoFactorRequired()) {
+            throw new ApiErrorException('Two factor auth is not supported.', 401);
+        }
+
+        try {
+            $response = $instagram->live->end($request->input('broadcast_id'));
+        } catch (Throwable $e) {
+            throw new ApiErrorException($e->getMessage(), 400);
+        }
+
+        return new JsonResponse([
+            'status' => $response->getStatus(),
+            'message' => $response->getMessage(),
+        ], 200);
     }
 }
