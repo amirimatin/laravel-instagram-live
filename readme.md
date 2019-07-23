@@ -19,7 +19,7 @@ composer install
 
 ### Start a live
 
-```http request
+```
 POST {URL}/api/live/start
 ```
 
@@ -30,7 +30,7 @@ Parameters:
 
 ### Stop a live
 
-```http request
+```
 POST {URL}/api/live/stop
 ```
 
