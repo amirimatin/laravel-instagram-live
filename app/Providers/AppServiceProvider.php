@@ -16,10 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(Instagram::class, function () {
             Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-            $instagram = new Instagram(false, false, [
-                'storage' => 'file',
-                'basefolder' => storage_path('app/instagram/sessions'),
-            ]);
+            $instagram = new Instagram(false, false);
 
             return $instagram;
         });
