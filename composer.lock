@@ -1374,24 +1374,25 @@
         },
         {
             "name": "miladrahimi/php-instagram-live",
-            "version": "v1.0",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/miladrahimi/php-instagram-live.git",
-                "reference": "0f962a683a30f765fa78306b52d3535e2e3e7ffe"
+                "reference": "dbc5d8966a673461616469d76b01fd1fe418d38c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/miladrahimi/php-instagram-live/zipball/0f962a683a30f765fa78306b52d3535e2e3e7ffe",
-                "reference": "0f962a683a30f765fa78306b52d3535e2e3e7ffe",
+                "url": "https://api.github.com/repos/miladrahimi/php-instagram-live/zipball/dbc5d8966a673461616469d76b01fd1fe418d38c",
+                "reference": "dbc5d8966a673461616469d76b01fd1fe418d38c",
                 "shasum": ""
             },
             "require": {
-                "mgp25/instagram-php": "dev-master#e79acc05cd9d690f663a68da2b6a1549d3df29e7"
+                "mgp25/instagram-php": "dev-master#e79acc05cd9d690f663a68da2b6a1549d3df29e7",
+                "php": ">7.1"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2019-07-17T20:11:28+00:00"
+            "time": "2019-07-19T15:17:24+00:00"
         },
         {
             "name": "monolog/monolog",
